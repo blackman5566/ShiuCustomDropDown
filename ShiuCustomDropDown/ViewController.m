@@ -7,8 +7,12 @@
 //
 
 #import "ViewController.h"
+#import "CustomDropDown.h"
 
-@interface ViewController ()
+@interface ViewController () <UITextFieldDelegate>
+
+@property (weak, nonatomic) IBOutlet UIButton *button;
+@property (nonatomic, strong) NSArray *dataArray;
 
 @end
 
@@ -16,12 +20,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.dataArray = @[@"1", @"2", @"3", @"4", @"5", @"6",@"7",@"8", @"9", @"10"];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
+- (IBAction)buttonAction:(id)sender {
+    CustomDropDown *customDropDown = [[CustomDropDown alloc] initShowCustomDropDownWithButton:self.button tableViewDataSource:self.dataArray direction:AnimationDirectionDown newFrame:self.button.frame selectCompleteBlock: ^(NSInteger selectIndex) {
+        [customDropDown removeFromSuperview];
+    }];
+    [self.view addSubview:customDropDown];
+}
+
 
 @end
